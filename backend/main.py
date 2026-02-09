@@ -26,14 +26,12 @@ app.include_router(AuthRouter, tags=["Auth"], prefix="/auth")
 from backend.routes.influencer import router as InfluencerRouter
 from backend.routes.postings import router as PostingsRouter
 from backend.routes.creation import router as CreationRouter
-from backend.routes.agent import router as AgentRouter
 from backend.routes.content_orchestrator import router as OrchestratorRouter
 
 # Core Endpoints
 app.include_router(InfluencerRouter, tags=["Influencer"], prefix="/influencer")
 app.include_router(PostingsRouter, tags=["Postings"], prefix="/postings")
 app.include_router(CreationRouter, tags=["Creation"], prefix="/creation")
-app.include_router(AgentRouter, tags=["Agent"], prefix="/agent")
 app.include_router(OrchestratorRouter, tags=["Orchestrator"], prefix="")
 
 @app.get("/")

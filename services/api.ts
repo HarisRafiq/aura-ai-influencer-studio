@@ -37,19 +37,23 @@ export const api = {
 
   // Streamlined Endpoints
   async fetchInfluencers(): Promise<Influencer[]> {
-    return httpClient.get<Influencer[]>(ENDPOINTS.INFLUENCERS);
+    const response = await httpClient.get<{ data: Influencer[] }>(ENDPOINTS.INFLUENCERS);
+    return response.data;
   },
 
   async createInfluencer(data: CreateInfluencerRequest): Promise<Influencer> {
-    return httpClient.post<Influencer>(ENDPOINTS.INFLUENCERS, data);
+    const response = await httpClient.post<{ data: Influencer }>(ENDPOINTS.INFLUENCERS, data);
+    return response.data;
   },
 
   async updateInfluencer(id: string, data: UpdateInfluencerRequest): Promise<Influencer> {
-    return httpClient.put<Influencer>(ENDPOINTS.INFLUENCER_BY_ID(id), data);
+    const response = await httpClient.put<{ data: Influencer }>(ENDPOINTS.INFLUENCER_BY_ID(id), data);
+    return response.data;
   },
 
   async fetchPostings(influencerId: string): Promise<PostingEntity[]> {
-    return httpClient.get<PostingEntity[]>(ENDPOINTS.POSTS_BY_INFLUENCER(influencerId));
+    const response = await httpClient.get<{ data: PostingEntity[] }>(ENDPOINTS.POSTS_BY_INFLUENCER(influencerId));
+    return response.data;
   },
 
   async generatePosting(
@@ -81,21 +85,24 @@ export const influencerApi = {
    * Get all influencers for the current user
    */
   async list(): Promise<Influencer[]> {
-    return httpClient.get<Influencer[]>(ENDPOINTS.INFLUENCERS);
+    const response = await httpClient.get<{ data: Influencer[] }>(ENDPOINTS.INFLUENCERS);
+    return response.data;
   },
 
   /**
    * Get a specific influencer by ID
    */
   async get(id: string): Promise<Influencer> {
-    return httpClient.get<Influencer>(ENDPOINTS.INFLUENCER_BY_ID(id));
+    const response = await httpClient.get<{ data: Influencer }>(ENDPOINTS.INFLUENCER_BY_ID(id));
+    return response.data;
   },
 
   /**
    * Create a new influencer
    */
   async create(data: CreateInfluencerRequest): Promise<Influencer> {
-    return httpClient.post<Influencer>(ENDPOINTS.INFLUENCERS, data);
+    const response = await httpClient.post<{ data: Influencer }>(ENDPOINTS.INFLUENCERS, data);
+    return response.data;
   },
 
   /**
@@ -104,7 +111,8 @@ export const influencerApi = {
   async update(id: string, data: UpdateInfluencerRequest): Promise<Influencer> {
     httpClient.clearCacheEntry(ENDPOINTS.INFLUENCERS);
     httpClient.clearCacheEntry(ENDPOINTS.INFLUENCER_BY_ID(id));
-    return httpClient.put<Influencer>(ENDPOINTS.INFLUENCER_BY_ID(id), data);
+    const response = await httpClient.put<{ data: Influencer }>(ENDPOINTS.INFLUENCER_BY_ID(id), data);
+    return response.data;
   },
 
   /**
@@ -113,7 +121,7 @@ export const influencerApi = {
   async delete(id: string): Promise<void> {
     httpClient.clearCacheEntry(ENDPOINTS.INFLUENCERS);
     httpClient.clearCacheEntry(ENDPOINTS.INFLUENCER_BY_ID(id));
-    return httpClient.delete<void>(ENDPOINTS.INFLUENCER_BY_ID(id));
+    await httpClient.delete<void>(ENDPOINTS.INFLUENCER_BY_ID(id));
   },
 };
 
@@ -122,14 +130,16 @@ export const postingApi = {
    * Get all posts for an influencer
    */
   async listByInfluencer(influencerId: string): Promise<PostingEntity[]> {
-    return httpClient.get<PostingEntity[]>(ENDPOINTS.POSTS_BY_INFLUENCER(influencerId));
+    const response = await httpClient.get<{ data: PostingEntity[] }>(ENDPOINTS.POSTS_BY_INFLUENCER(influencerId));
+    return response.data;
   },
 
   /**
    * Get a specific post by ID
    */
   async get(postId: string): Promise<PostingEntity> {
-    return httpClient.get<PostingEntity>(ENDPOINTS.POST_BY_ID(postId));
+    const response = await httpClient.get<{ data: PostingEntity }>(ENDPOINTS.POST_BY_ID(postId));
+    return response.data;
   },
 
   /**
@@ -144,6 +154,6 @@ export const postingApi = {
    * Delete a post
    */
   async delete(postId: string): Promise<void> {
-    return httpClient.delete<void>(ENDPOINTS.POST_BY_ID(postId));
+    await httpClient.delete<void>(ENDPOINTS.POST_BY_ID(postId));
   },
 };
